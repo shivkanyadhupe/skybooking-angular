@@ -1,0 +1,33 @@
+<div class="container" style="margin: 2rem;">
+  <h2>📋 All Booking Records</h2>
+
+  <div *ngIf="error" class="text-danger">{{ error }}</div>
+  <div *ngIf="bookings.length === 0 && !error">No bookings found.</div>
+
+  <table *ngIf="bookings.length > 0" class="table table-bordered table-hover mt-3">
+    <thead class="thead-dark">
+      <tr>
+        <th>Passenger Name</th>
+        <th>Phone</th>
+        <th>Flight Number</th>
+        <th>Seat</th>
+        <th>Ticket Type</th>
+        <th>Adults</th>
+        <th>Children</th>
+        <th>User Email</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let b of bookings">
+        <td>{{ b.passengerName }}</td>
+        <td>{{ b.passengerPhone }}</td>
+        <td>{{ b.flightNumber }}</td>
+        <td>{{ b.seatNumber }}</td>
+        <td>{{ b.ticketType }}</td>
+        <td>{{ b.adults }}</td>
+        <td>{{ b.children }}</td>
+        <td>{{ b.userEmail }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

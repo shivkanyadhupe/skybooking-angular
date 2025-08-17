@@ -1,0 +1,61 @@
+<h2 class="title">✈️ Manage Flights</h2>
+
+<form [formGroup]="flightForm" (ngSubmit)="submitFlight()" class="flight-form">
+  <div class="form-grid">
+    <input formControlName="flightNumber" placeholder="Flight Number" required />
+    <input formControlName="airline" placeholder="Airline" required />
+    <input formControlName="source" placeholder="Source" required />
+    <input formControlName="destination" placeholder="Destination" required />
+    <input type="datetime-local" formControlName="departureTime" required />
+    <input type="datetime-local" formControlName="arrivalTime" required />
+    
+  </div>
+<div class="floating-label">
+  <input type="number" formControlName="totalSeats" required />
+  <label>Total Seats</label>
+</div>
+
+<div class="floating-label">
+  <input type="number" formControlName="availableSeats" required />
+  <label>Available Seats</label>
+</div>
+
+<div class="floating-label">
+  <input type="number" formControlName="fare" required />
+  <label>Fare (₹)</label>
+</div>
+
+
+  <div class="form-actions">
+    <button type="submit" class="btn-primary">
+      {{ editingFlightId !== null ? 'Update Flight' : 'Add Flight' }}
+    </button>
+    <button type="button" class="btn-secondary" (click)="cancelEdit()" *ngIf="editingFlightId !== null">Cancel</button>
+  </div>
+</form>
+
+<hr />
+
+<div class="card-container" *ngIf="flights.length > 0; else noFlights">
+  <!-- ✅ trackBy function added here -->
+  <div class="flight-card" *ngFor="let flight of flights; trackBy: trackByFlightId">
+    <div class="card-header">
+      <strong>{{ flight.flightNumber }} - {{ flight.airline }}</strong>
+    </div>
+    <div class="card-body">
+      <p>📍 {{ flight.source }} → {{ flight.destination }}</p>
+      <p>🕓 Departure: {{ flight.departureTime | date:'short' }}</p>
+      <p>🕓 Arrival: {{ flight.arrivalTime | date:'short' }}</p>
+      <p>💺 Seats: {{ flight.availableSeats }}/{{ flight.totalSeats }}</p>
+      <p>💰 Fare: ₹{{ flight.fare }}</p>
+    </div>
+    <div class="card-footer">
+      <button class="edit-btn" (click)="editFlight(flight)">✏️ Edit</button>
+      <button class="delete-btn" (click)="flight.id != null && deleteFlight(flight.id)">🗑️ Delete</button>
+    </div>
+  </div>
+</div>
+
+<ng-template #noFlights>
+  <p class="no-flights-msg">🚫 No flights found. Please add some.</p>
+</ng-template>

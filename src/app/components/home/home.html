@@ -1,0 +1,47 @@
+<!-- Only show home content if user is NOT an admin -->
+<div *ngIf="!isAdmin" class="home-container">
+
+  <!-- HERO SECTION -->
+  <section class="hero">
+    <div class="hero-content">
+      <div class="hero-text">
+        <h1 class="hero-title">
+          Find Your Perfect Flight <span class="gradient-text">SkyBooking</span>
+        </h1>
+        <p class="hero-subtitle">
+          Discover amazing destinations with the best flight deals.
+          Book your next adventure with confidence and ease.
+        </p>
+        <div class="hero-stats">
+          <div class="stat"><h3>1M+</h3><p>Happy Travelers</p></div>
+          <div class="stat"><h3>500+</h3><p>Destinations</p></div>
+          <div class="stat"><h3>24/7</h3><p>Support</p></div>
+        </div>
+      </div>
+
+      <!-- Floating card with BOOK NOW -->
+      <div class="hero-image">
+        <a routerLink="/search" [queryParams]="{ promoBanner: 1 }" class="floating-card">
+          <i class="fas fa-plane"></i>
+          <h4>Book Now</h4>
+          <p>Best Prices Guaranteed</p>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- SEARCH SECTION -->
+  <section class="search-section">
+    <div class="container">
+      <h2 class="section-title">Search Flights</h2>
+      <app-flight-search></app-flight-search>
+    </div>
+  </section>
+
+  <!-- You can keep the features + CTA section below unchanged -->
+  <!-- Example placeholder (replace `…` with actual content if needed) -->
+  <section class="features-section">
+    <!-- Your feature cards / CTA here -->
+  </section>
+
+</div>

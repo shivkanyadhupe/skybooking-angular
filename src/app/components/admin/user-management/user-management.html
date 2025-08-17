@@ -1,0 +1,36 @@
+<div class="user-management-container">
+  <h2>User Management</h2>
+
+  <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
+  <div *ngIf="successMessage" class="success-message">{{ successMessage }}</div>
+
+  <table *ngIf="users.length > 0" class="user-table">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Role</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let user of users">
+        <td>{{ user.name }}</td>
+        <td>{{ user.email }}</td>
+        <td>
+          <span class="role-chip" [ngClass]="{
+            'admin-role': user.role === 'ROLE_ADMIN',
+            'user-role': user.role === 'ROLE_USER'
+          }">{{ user.role.replace('ROLE_', '') }}</span>
+        </td>
+        <td>
+          <button class="delete-btn" (click)="deleteUser(user.id)">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div *ngIf="users.length === 0 && !errorMessage" class="no-users">
+    No users found.
+  </div>
+</div>

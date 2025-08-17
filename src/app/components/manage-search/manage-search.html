@@ -1,0 +1,42 @@
+<h2>Search Flights</h2>
+
+<form [formGroup]="searchForm" (ngSubmit)="onSearch()" class="search-form">
+  <input formControlName="source" placeholder="Source" required />
+  <input formControlName="destination" placeholder="Destination" required />
+  <input type="date" formControlName="flightDate" required />
+  <button type="submit">Search</button>
+  <button type="button" (click)="clearSearch()">Clear</button>
+</form>
+
+<table *ngIf="searchResults.length > 0" class="results-table">
+  <thead>
+    <tr>
+      <th>Flight No</th>
+      <th>Airline</th>
+      <th>Source</th>
+      <th>Destination</th>
+      <th>Departure</th>
+      <th>Arrival</th>
+      <th>Total Seats</th>
+      <th>Available</th>
+      <th>Fare</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let flight of searchResults">
+      <td>{{ flight.flightNumber }}</td>
+      <td>{{ flight.airline }}</td>
+      <td>{{ flight.source }}</td>
+      <td>{{ flight.destination }}</td>
+      <td>{{ flight.departureTime | date: 'short' }}</td>
+      <td>{{ flight.arrivalTime | date: 'short' }}</td>
+      <td>{{ flight.totalSeats }}</td>
+      <td>{{ flight.availableSeats }}</td>
+      <td>₹{{ flight.fare }}</td>
+    </tr>
+  </tbody>
+</table>
+
+<p *ngIf="searchResults.length === 0 && searchForm.valid">
+  No flights found for given criteria.
+</p>

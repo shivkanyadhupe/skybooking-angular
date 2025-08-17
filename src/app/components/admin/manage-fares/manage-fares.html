@@ -1,0 +1,48 @@
+<div class="fare-container">
+  <h2>Manage Fares</h2>
+
+  <form [formGroup]="fareForm" (ngSubmit)="submitFare()">
+    <label>Flight Number:</label>
+    <input formControlName="flightNumber" placeholder="e.g. SH07" required />
+
+    <label>Ticket Type:</label>
+    <select formControlName="ticketType" required>
+      <option value="ECONOMY">Economy</option>
+      <option value="BUSINESS">Business</option>
+      <option value="FIRST">First</option>
+    </select>
+
+    <label>Price (₹):</label>
+    <input type="number" formControlName="price" required />
+
+    <div class="btn-group">
+      <button type="submit">
+        {{ editingFareId !== null ? 'Update Fare' : 'Add Fare' }}
+      </button>
+      <button type="button" (click)="cancelEdit()" *ngIf="editingFareId !== null">Cancel</button>
+    </div>
+  </form>
+
+  <h3>Fare List</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>Flight #</th>
+        <th>Type</th>
+        <th>Price (₹)</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let fare of fares">
+        <td>{{ fare.flightNumber }}</td>
+        <td>{{ fare.ticketType }}</td>
+        <td>₹{{ fare.price | number: '1.0-0' }}</td>
+        <td>
+          <button class="edit-btn" (click)="editFare(fare)">Edit</button>
+          <button class="delete-btn" (click)="deleteFare(fare.id!)">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

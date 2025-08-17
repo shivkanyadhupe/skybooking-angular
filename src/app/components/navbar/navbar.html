@@ -1,0 +1,66 @@
+<nav class="navbar">
+  <div class="nav-container">
+    <!-- Brand -->
+    <div class="nav-brand">
+      <a routerLink="/" class="brand-link">✈ SkyBooking</a>
+    </div>
+
+    <!-- Navigation Menu -->
+    <div class="nav-menu" [class.active]="isMenuOpen">
+      <!-- User View -->
+      <ng-container *ngIf="currentUser && !isAdmin">
+        <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Home</a>
+        <a routerLink="/search" routerLinkActive="active">Search</a>
+        <a routerLink="/my-bookings" routerLinkActive="active">My Bookings</a>
+      </ng-container>
+
+      <!-- Admin View -->
+      <ng-container *ngIf="isAdmin">
+        <a routerLink="/admin/flights" routerLinkActive="active">Manage Flights</a>
+        <a routerLink="/admin/fares" routerLinkActive="active">Manage Fares</a>
+        <a routerLink="/admin/bookings" routerLinkActive="active">Manage Bookings</a>
+        <a routerLink="/admin/users" routerLinkActive="active">User Management</a>
+      </ng-container>
+
+      <!-- Profile Section -->
+      <div
+        class="profile-section"
+        *ngIf="currentUser"
+        (click)="toggleDropdown($event)"
+      >
+        <div class="profile-trigger">
+          <span class="avatar-icon">👤</span>
+          <span class="profile-name">{{ currentUser.name }}</span>
+          <span class="chevron">▼</span>
+        </div>
+
+        <!-- Dropdown -->
+        <!-- ✅ Improved Dropdown -->
+<div class="profile-dropdown" *ngIf="isDropdownVisible">
+  <div class="dropdown-header">
+    <div class="avatar-icon large">👤</div>
+    <div class="user-info">
+      <div class="user-name">{{ currentUser.name }}</div>
+      <div class="user-email">{{ currentUser.email }}</div>
+      <div class="role-tag">{{ isAdmin ? 'Admin' : 'User' }}</div>
+    </div>
+  </div>
+  <hr />
+  <button class="logout-btn" (click)="logout()">🔓 Logout</button>
+</div>
+
+      </div>
+
+      <!-- Guest View -->
+      <div *ngIf="!currentUser" class="auth-buttons">
+        <a routerLink="/login">Login</a>
+        <a routerLink="/register" class="register-btn">Register</a>
+      </div>
+    </div>
+
+    <!-- Hamburger for Mobile -->
+    <div class="hamburger" (click)="toggleMenu()">
+      <span></span><span></span><span></span>
+    </div>
+  </div>
+</nav>

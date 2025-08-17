@@ -1,0 +1,146 @@
+<!-- ─────────────────────────────────────────────
+File: src/app/components/booking/booking.html (No Functional Changes)
+───────────────────────────────────────────── -->
+
+<div class="min-h-screen flex items-center justify-center bg-gray-100 p-4 sm:p-6 lg:p-8">
+  <div class="bg-white p-6 sm:p-8 rounded-lg shadow-xl w-full max-w-md">
+    <h2 class="text-3xl font-extrabold text-center text-indigo-700 mb-8">
+      Book Your Flight ✈️
+    </h2>
+
+    <form [formGroup]="bookingForm" (ngSubmit)="payAndBook()" class="space-y-6">
+      <!-- Passenger Name -->
+      <div>
+        <label for="passengerName" class="block text-sm font-medium text-gray-700 mb-1">Passenger Name</label>
+        <input
+          id="passengerName"
+          type="text"
+          formControlName="passengerName"
+          class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+          placeholder="e.g., John Doe"
+          required
+        />
+        <div *ngIf="bookingForm.get('passengerName')?.invalid && bookingForm.get('passengerName')?.touched" class="text-red-600 text-xs mt-1">
+          Passenger name is required.
+        </div>
+      </div>
+
+      <!-- Flight Number -->
+      <div>
+        <label for="flightNumber" class="block text-sm font-medium text-gray-700 mb-1">Flight Number</label>
+        <input
+          id="flightNumber"
+          type="text"
+          formControlName="flightNumber"
+          class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+          placeholder="e.g., AI101"
+          required
+        />
+        <div *ngIf="bookingForm.get('flightNumber')?.invalid && bookingForm.get('flightNumber')?.touched" class="text-red-600 text-xs mt-1">
+          Flight number is required.
+        </div>
+      </div>
+
+      <!-- Number of Adults and Children -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div>
+          <label for="numOfAdults" class="block text-sm font-medium text-gray-700 mb-1">Adults</label>
+          <input
+            id="numOfAdults"
+            type="number"
+            formControlName="numOfAdults"
+            min="1"
+            class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+            required
+          />
+          <div *ngIf="bookingForm.get('numOfAdults')?.invalid && bookingForm.get('numOfAdults')?.touched" class="text-red-600 text-xs mt-1">
+            At least 1 adult is required.
+          </div>
+        </div>
+        <div>
+          <label for="numOfChildren" class="block text-sm font-medium text-gray-700 mb-1">Children</label>
+          <input
+            id="numOfChildren"
+            type="number"
+            formControlName="numOfChildren"
+            min="0"
+            class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+            required
+          />
+          <div *ngIf="bookingForm.get('numOfChildren')?.invalid && bookingForm.get('numOfChildren')?.touched" class="text-red-600 text-xs mt-1">
+            Number of children cannot be negative.
+          </div>
+        </div>
+      </div>
+
+      <!-- Ticket Type -->
+      <div>
+        <label for="ticketType" class="block text-sm font-medium text-gray-700 mb-1">Ticket Type</label>
+        <select
+          id="ticketType"
+          formControlName="ticketType"
+          class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+          required
+        >
+          <option value="ECONOMY">Economy</option>
+          <option value="BUSINESS">Business</option>
+          <option value="FIRST">First</option>
+        </select>
+        <div *ngIf="bookingForm.get('ticketType')?.invalid && bookingForm.get('ticketType')?.touched" class="text-red-600 text-xs mt-1">
+          Ticket type is required.
+        </div>
+      </div>
+
+      <!-- Seat Number -->
+      <div>
+        <label for="seatNumber" class="block text-sm font-medium text-gray-700 mb-1">Seat Number</label>
+        <input
+          id="seatNumber"
+          type="text"
+          formControlName="seatNumber"
+          class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+          placeholder="e.g., 12A"
+          required
+        />
+        <div *ngIf="bookingForm.get('seatNumber')?.invalid && bookingForm.get('seatNumber')?.touched" class="text-red-600 text-xs mt-1">
+          Seat number is required.
+        </div>
+      </div>
+
+      <!-- Fare Display -->
+      <div *ngIf="fareAmount > 0" class="text-center text-xl font-bold text-green-700 mt-4 p-3 bg-green-50 rounded-md shadow-inner">
+        Total Fare: ₹{{ fareAmount | number:'1.2-2' }}
+      </div>
+      <div *ngIf="fareAmount === 0 && bookingForm.get('flightNumber')?.valid && bookingForm.get('ticketType')?.valid" class="text-center text-sm text-gray-500 mt-4">
+        Enter details to calculate fare.
+      </div>
+
+      <!-- Message Display (Success/Error) -->
+      <div *ngIf="errorMessage" class="p-3 rounded-md text-sm bg-red-100 text-red-700 font-medium text-center">
+        {{ errorMessage }}
+      </div>
+      <div *ngIf="successMessage" class="p-3 rounded-md text-sm bg-green-100 text-green-700 font-medium text-center">
+        {{ successMessage }}
+      </div>
+
+      <!-- Submit Button -->
+      <button
+        type="submit"
+        [disabled]="bookingForm.invalid || fareAmount <= 0 || isSubmitting"
+        class="w-full flex justify-center items-center py-3 px-4 border border-transparent rounded-md shadow-sm text-lg font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition duration-150 ease-in-out disabled:opacity-50 disabled:cursor-not-allowed"
+      >
+        <span *ngIf="!isSubmitting">Proceed to Payment</span>
+        <span *ngIf="isSubmitting">
+          <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+          </svg>
+          Processing...
+        </span>
+      </button>
+    </form>
+  </div>
+</div>
+
+<!-- Razorpay SDK: It's recommended to load this globally in index.html -->
+<!-- <script src="https://checkout.razorpay.com/v1/checkout.js"></script> -->

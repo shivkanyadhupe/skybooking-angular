@@ -1,0 +1,24 @@
+<div class="payment-container">
+  <h2 class="title">
+    <i class="fas fa-credit-card"></i>
+    Payment
+  </h2>
+
+  <!-- Loading / creating order -->
+  <div class="loading" *ngIf="loading">
+    <i class="fas fa-spinner fa-spin"></i>
+    <p>Creating Razorpay order…</p>
+  </div>
+
+  <!-- Error -->
+  <div class="alert error" *ngIf="error">
+    <i class="fas fa-exclamation-triangle"></i>
+    {{ error }}
+  </div>
+
+  <!-- Success (brief message before Razorpay opens) -->
+  <div class="alert success" *ngIf="!loading && !error">
+    <i class="fas fa-check-circle"></i>
+    Redirecting to secure Razorpay checkout&hellip;
+  </div>
+</div>

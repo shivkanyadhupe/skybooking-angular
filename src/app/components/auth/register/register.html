@@ -1,0 +1,112 @@
+<div class="auth-container">
+  <div class="auth-card">
+    <div class="auth-header">
+      <h2><i class="fas fa-user-plus"></i> Create Account</h2>
+      <p>Join SkyBooking and start your journey</p>
+    </div>
+
+    <form (ngSubmit)="register()" #registerForm="ngForm" class="auth-form">
+      <!-- Full Name -->
+      <div class="form-group">
+        <label for="name"><i class="fas fa-user"></i> Full Name</label>
+        <input
+          type="text"
+          id="name"
+          [(ngModel)]="userData.name"
+          name="name"
+          required
+          minlength="3"
+          class="form-control"
+          placeholder="Enter your full name"
+        />
+      </div>
+
+      <!-- Email -->
+      <div class="form-group">
+        <label for="email"><i class="fas fa-envelope"></i> Email</label>
+        <input
+          type="email"
+          id="email"
+          [(ngModel)]="userData.email"
+          name="email"
+          required
+          class="form-control"
+          placeholder="Enter your email"
+        />
+      </div>
+
+      <!-- Password -->
+      <div class="form-group">
+        <label for="password"><i class="fas fa-lock"></i> Password</label>
+        <input
+          type="password"
+          id="password"
+          [(ngModel)]="userData.password"
+          name="password"
+          required
+          minlength="6"
+          class="form-control"
+          placeholder="Create a password"
+        />
+      </div>
+
+      <!-- Confirm Password -->
+      <div class="form-group">
+        <label for="confirmPassword"><i class="fas fa-lock"></i> Confirm Password</label>
+        <input
+          type="password"
+          id="confirmPassword"
+          [(ngModel)]="confirmPassword"
+          name="confirmPassword"
+          required
+          class="form-control"
+          placeholder="Confirm your password"
+        />
+      </div>
+
+      <!-- Role Selection -->
+      <div class="form-group">
+        <label for="role"><i class="fas fa-user-tag"></i> Select Role</label>
+        <select
+          id="role"
+          [(ngModel)]="userData.role"
+          name="role"
+          class="form-control"
+          required
+        >
+          <option value="ROLE_USER">User</option>
+          <option value="ROLE_ADMIN">Admin</option>
+        </select>
+      </div>
+
+      <!-- Error Message -->
+      <div class="error-message" *ngIf="errorMessage">
+        <i class="fas fa-exclamation-triangle"></i>
+        {{ errorMessage }}
+      </div>
+
+      <!-- Success Message -->
+      <div class="success-message" *ngIf="successMessage">
+        <i class="fas fa-check-circle"></i>
+        {{ successMessage }}
+      </div>
+
+      <!-- Submit Button -->
+      <button
+        type="submit"
+        class="auth-btn"
+        [disabled]="!registerForm.form.valid || isLoading || userData.password !== confirmPassword"
+      >
+        <i class="fas fa-user-plus" *ngIf="!isLoading"></i>
+        <i class="fas fa-spinner fa-spin" *ngIf="isLoading"></i>
+        {{ isLoading ? "Creating Account..." : "Create Account" }}
+      </button>
+    </form>
+
+    <div class="auth-footer">
+      <p>Already have an account?
+        <a routerLink="/login" class="auth-link">Sign in here</a>
+      </p>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,21 @@
+<div class="fare-box">
+  <h4><i class="fas fa-rupee-sign"></i> Fare estimator</h4>
+
+  <p><strong>Class:</strong> {{ ticketType || '—' }}</p>
+  <p><strong>Passengers:</strong> {{ passengers }}</p>
+
+  <button class="btn"
+          (click)="calculate()"
+          [disabled]="isLoading || !ticketType || passengers < 1">
+    {{ isLoading ? 'Fetching…' : 'Calculate Fare' }}
+  </button>
+
+  <p class="error" *ngIf="error">
+    <i class="fas fa-exclamation-triangle"></i> {{ error }}
+  </p>
+
+  <ng-container *ngIf="!error && totalFare">
+    <p>Unit fare: ₹{{ unitFare | number }}</p>
+    <p><strong>Total fare: ₹{{ totalFare | number }}</strong></p>
+  </ng-container>
+</div>

@@ -1,0 +1,23 @@
+.admin-dashboard {
+  text-align: center;
+  padding: 2rem;
+
+  .admin-nav {
+    margin-top: 2rem;
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+
+    a {
+      padding: 0.5rem 1rem;
+      background: #007acc;
+      color: #fff;
+      border-radius: 8px;
+      text-decoration: none;
+
+      &:hover {
+        background: #005fa3;
+      }
+    }
+  }
+}

@@ -1,0 +1,93 @@
+.user-management-container {
+  padding: 2rem;
+  max-width: 900px;
+  margin: auto;
+  background: #f4f7fa;
+  border-radius: 10px;
+  box-shadow: 0 0 8px rgba(0,0,0,0.05);
+
+  h2 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 1.5rem;
+  }
+
+  .error-message, .success-message {
+    text-align: center;
+    margin-bottom: 1rem;
+    padding: 0.75rem 1rem;
+    border-radius: 6px;
+    font-weight: bold;
+  }
+
+  .error-message {
+    background-color: #ffe6e6;
+    color: #d60000;
+  }
+
+  .success-message {
+    background-color: #e6ffe6;
+    color: #007f00;
+  }
+
+  .user-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+
+    th, td {
+      padding: 12px 16px;
+      text-align: left;
+      border-bottom: 1px solid #eee;
+    }
+
+    thead {
+      background-color: #007bff;
+      color: white;
+    }
+
+    tbody tr:hover {
+      background-color: #f1f1f1;
+    }
+
+    .delete-btn {
+      background-color: #dc3545;
+      color: white;
+      border: none;
+      padding: 6px 12px;
+      border-radius: 4px;
+      cursor: pointer;
+
+      &:hover {
+        background-color: #c82333;
+      }
+    }
+
+    .role-chip {
+      padding: 4px 10px;
+      border-radius: 12px;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      font-weight: 600;
+
+      &.admin-role {
+        background: #343a40;
+        color: #fff;
+      }
+
+      &.user-role {
+        background: #17a2b8;
+        color: #fff;
+      }
+    }
+  }
+
+  .no-users {
+    text-align: center;
+    color: #666;
+    margin-top: 1rem;
+    font-style: italic;
+  }
+}

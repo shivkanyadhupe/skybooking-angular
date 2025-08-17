@@ -1,0 +1,61 @@
+<!-- ───────────── Flight‑search form ───────────── -->
+<form (ngSubmit)="searchFlights()" #f="ngForm" class="search-box">
+  <div class="field">
+    <label>From</label>
+    <input
+      required
+      name="source"
+      [(ngModel)]="searchRequest.source"
+      placeholder="City of departure" />
+  </div>
+
+  <div class="field">
+    <label>To</label>
+    <input
+      required
+      name="destination"
+      [(ngModel)]="searchRequest.destination"
+      placeholder="City of arrival" />
+  </div>
+
+  <div class="field">
+    <label>Date</label>
+    <input
+      required
+      type="date"
+      name="departureDate"
+      [(ngModel)]="searchRequest.departureDate" />
+  </div>
+
+  <button class="btn" type="submit" [disabled]="isLoading || !f.valid">
+    <span *ngIf="!isLoading">Search flights</span>
+    <span *ngIf="isLoading"><i class="fas fa-spinner fa-spin"></i> Searching…</span>
+  </button>
+</form>
+
+<!-- ───────────── Error message ───────────── -->
+<p *ngIf="errorMessage" class="error">
+  <i class="fas fa-exclamation-triangle"></i> {{ errorMessage }}
+</p>
+
+<!-- ───────────── Results list ───────────── -->
+<div *ngIf="!isLoading && flights.length" class="results">
+  <h3>{{ flights.length }} flight{{ flights.length > 1 ? 's' : '' }} found</h3>
+
+  <div class="flight-card" *ngFor="let f of flights">
+    <div class="info">
+      <h4>{{ f.airline }} – {{ f.flightNumber }}</h4>
+      <p>{{ f.source }} → {{ f.destination }}</p>
+      <p>{{ f.departureTime }} – {{ f.arrivalTime }}</p>
+    </div>
+
+    <div class="price">
+      ₹{{ f.price | number }}
+    </div>
+  </div>
+</div>
+
+<!-- ───────────── “No flights” notice ───────────── -->
+<p *ngIf="!isLoading && !errorMessage && flights.length === 0" class="empty">
+  No flights match your query.
+</p>
